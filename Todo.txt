@@ -1,0 +1,4 @@
+-Image laad niet
+-Detailpagina/product page
+-Filter optie
+-Details testen (height, diameter, standingPlace, wateringNeeds)
