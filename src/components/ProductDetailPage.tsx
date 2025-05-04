@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Product, StandingPlace, WateringNeeds } from "../types/Product";
+import "./ProductDetailPage.css";
 
 const ProductDetailPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
@@ -30,24 +31,45 @@ const ProductDetailPage: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading product...</div>;
+    return <div className="loading-message">Loading product...</div>;
   }
 
   if (!product) {
-    return <div>Product not found</div>;
+    return <div className="not-found-message">Product not found</div>;
   }
 
   return (
-    <div>
-      <h1>Product detail</h1>
-      <div>
-        <img src={product.photoUrl} alt={product.name} />
+    <div className="product-detail-container">
+      <h1 className="product-detail-title">Product detail</h1>
+      <div className="product-detail-layout">
+        <img
+          src={product.photoUrl}
+          alt={product.name}
+          className="product-detail-image"
+        />
 
-        <div>
-          <h2>{product.name}</h2>
-          <p>€{product.price}</p>
-          <p>{product.description}</p>
-          <p>Product ID: {id}</p>
+        <div className="product-detail-info">
+          <h2 className="product-name">{product.name}</h2>
+          <p className="product-price">€{product.price}</p>
+          <p className="product-description">{product.description}</p>
+
+          <div className="product-specs">
+            <p className="product-spec">
+              <strong>Height:</strong> {product.height} cm
+            </p>
+            <p className="product-spec">
+              <strong>Diameter:</strong> {product.diameter} cm
+            </p>
+            <p className="product-spec">
+              <strong>Standing Place:</strong> {product.standingPlace}
+            </p>
+            <p className="product-spec">
+              <strong>Watering Needs:</strong> {product.wateringNeeds}
+            </p>
+            <p className="product-spec">
+              <strong>Product ID:</strong> {id}
+            </p>
+          </div>
         </div>
       </div>
     </div>
