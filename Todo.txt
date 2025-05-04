@@ -1,4 +1,2 @@
--Image laad niet
--Detailpagina/product page
--Filter optie
--Details testen (height, diameter, standingPlace, wateringNeeds)
+-Terug knop vanaf productDetailPage
+-Als url niet bestaat stuur naar ProductsPage of geef error

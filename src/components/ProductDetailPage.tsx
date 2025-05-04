@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Product, StandingPlace, WateringNeeds } from "../types/Product";
 import "./ProductDetailPage.css";
 
@@ -7,6 +7,7 @@ const ProductDetailPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -42,7 +43,12 @@ const ProductDetailPage: React.FC = () => {
 
   return (
     <div className="product-detail-container">
-      <h1 className="product-detail-title">Product detail</h1>
+      <div className="product-detail-header">
+        <h1 className="product-detail-title">Product detail</h1>
+        <button className="back-button" onClick={() => navigate("/products")}>
+          Back to Products
+        </button>
+      </div>
       <div className="product-detail-layout">
         <img
           src={product.photoUrl}
