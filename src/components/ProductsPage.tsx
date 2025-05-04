@@ -5,8 +5,17 @@ import "./ProductsPage.css";
 
 const ProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [nameFilter, setNameFilter] = useState<string>("");
+  const [minHeight, setMinHeight] = useState<number | "">("");
+  const [maxHeight, setMaxHeight] = useState<number | "">("");
+  const [minDiameter, setMinDiameter] = useState<number | "">("");
+  const [maxDiameter, setMaxDiameter] = useState<number | "">("");
+  const [minPrice, setMinPrice] = useState<number | "">("");
+  const [maxPrice, setMaxPrice] = useState<number | "">("");
 
   useEffect(() => {
     const getProducts = async () => {
@@ -21,6 +30,7 @@ const ProductsPage: React.FC = () => {
         }));
 
         setProducts(mappedProducts);
+        setFilteredProducts(mappedProducts);
         setLoading(false);
       } catch (err) {
         setError("Error fetching products. Please try again later.");
@@ -31,6 +41,62 @@ const ProductsPage: React.FC = () => {
 
     getProducts();
   }, []);
+
+  useEffect(() => {
+    filterProducts();
+  }, [
+    nameFilter,
+    minHeight,
+    maxHeight,
+    minDiameter,
+    maxDiameter,
+    minPrice,
+    maxPrice,
+    products,
+  ]);
+
+  const filterProducts = () => {
+    let filtered = [...products];
+
+    if (nameFilter.trim()) {
+      filtered = filtered.filter((product) =>
+        product.name.toLowerCase().includes(nameFilter.toLowerCase())
+      );
+    }
+
+    if (minHeight !== "") {
+      filtered = filtered.filter((product) => product.height >= minHeight);
+    }
+    if (maxHeight !== "") {
+      filtered = filtered.filter((product) => product.height <= maxHeight);
+    }
+
+    if (minDiameter !== "") {
+      filtered = filtered.filter((product) => product.diameter >= minDiameter);
+    }
+    if (maxDiameter !== "") {
+      filtered = filtered.filter((product) => product.diameter <= maxDiameter);
+    }
+
+    if (minPrice !== "") {
+      filtered = filtered.filter((product) => product.price >= minPrice);
+    }
+    if (maxPrice !== "") {
+      filtered = filtered.filter((product) => product.price <= maxPrice);
+    }
+
+    setFilteredProducts(filtered);
+  };
+
+  const resetFilters = () => {
+    setNameFilter("");
+    setMinHeight("");
+    setMaxHeight("");
+    setMinDiameter("");
+    setMaxDiameter("");
+    setMinPrice("");
+    setMaxPrice("");
+  };
 
   const mapStandingPlace = (apiValue: string): StandingPlace => {
     if (apiValue === "Sun") return StandingPlace.SUNNY;
@@ -78,8 +144,104 @@ const ProductsPage: React.FC = () => {
   return (
     <div className="products-container">
       <h1 className="products-title">Producten</h1>
+
+      <div className="filter-container">
+        <h3>Filter Producten</h3>
+        <div className="filter-row">
+          <div className="filter-group">
+            <label htmlFor="nameFilter">Naam:</label>
+            <input
+              type="text"
+              id="nameFilter"
+              value={nameFilter}
+              onChange={(e) => setNameFilter(e.target.value)}
+              placeholder="Zoek op naam"
+            />
+          </div>
+        </div>
+
+        <div className="filter-row">
+          <div className="filter-group">
+            <label>Hoogte (cm):</label>
+            <div className="range-inputs">
+              <input
+                type="number"
+                value={minHeight}
+                onChange={(e) =>
+                  setMinHeight(e.target.value ? Number(e.target.value) : "")
+                }
+                placeholder="Min"
+              />
+              <span>tot</span>
+              <input
+                type="number"
+                value={maxHeight}
+                onChange={(e) =>
+                  setMaxHeight(e.target.value ? Number(e.target.value) : "")
+                }
+                placeholder="Max"
+              />
+            </div>
+          </div>
+
+          <div className="filter-group">
+            <label>Diameter (cm):</label>
+            <div className="range-inputs">
+              <input
+                type="number"
+                value={minDiameter}
+                onChange={(e) =>
+                  setMinDiameter(e.target.value ? Number(e.target.value) : "")
+                }
+                placeholder="Min"
+              />
+              <span>tot</span>
+              <input
+                type="number"
+                value={maxDiameter}
+                onChange={(e) =>
+                  setMaxDiameter(e.target.value ? Number(e.target.value) : "")
+                }
+                placeholder="Max"
+              />
+            </div>
+          </div>
+
+          <div className="filter-group">
+            <label>Prijs (€):</label>
+            <div className="range-inputs">
+              <input
+                type="number"
+                value={minPrice}
+                onChange={(e) =>
+                  setMinPrice(e.target.value ? Number(e.target.value) : "")
+                }
+                placeholder="Min"
+              />
+              <span>tot</span>
+              <input
+                type="number"
+                value={maxPrice}
+                onChange={(e) =>
+                  setMaxPrice(e.target.value ? Number(e.target.value) : "")
+                }
+                placeholder="Max"
+              />
+            </div>
+          </div>
+        </div>
+
+        <button className="reset-filters-btn" onClick={resetFilters}>
+          Reset Filters
+        </button>
+      </div>
+
+      <div className="products-results">
+        <p>Aantal resultaten: {filteredProducts.length}</p>
+      </div>
+
       <div className="products-grid">
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <div key={product.id} className="product-card">
             <img
               src={product.photoUrl}
