@@ -1,6 +1,6 @@
 export enum StandingPlace {
   SUNNY = "SUNNY",
-  HALF_SHADOW = "HALF_SHADOW",
+  PARTIAL = "PARTIAL",
   SHADOW = "SHADOW",
 }
 
