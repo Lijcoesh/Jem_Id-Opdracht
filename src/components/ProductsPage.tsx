@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Product } from "../types/Product";
 import { fetchProducts } from "../services/productService";
+import { fetchDummyProducts } from "../services/DummyProductService";
 import "./ProductsPage.css";
 
 const ProductsPage: React.FC = () => {
@@ -11,7 +12,7 @@ const ProductsPage: React.FC = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const data = await fetchProducts();
+        const data = await fetchDummyProducts();
         console.log("Products data:", data);
         setProducts(data);
         setLoading(false);
