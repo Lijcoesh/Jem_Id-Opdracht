@@ -20,4 +20,5 @@ export interface Product {
   standingPlace: StandingPlace;
   wateringNeeds: WateringNeeds;
   photoUrl: string;
+  selected?: boolean;
 }

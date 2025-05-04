@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Product, StandingPlace, WateringNeeds } from "../types/Product";
 import { fetchProducts } from "../services/productService";
 import "./ProductsPage.css";
 
 const ProductsPage: React.FC = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -138,6 +140,10 @@ const ProductsPage: React.FC = () => {
     }
   };
 
+  const handleProductClick = (productId: number) => {
+    navigate(`/product/${productId}`);
+  };
+
   if (loading) return <p className="loading-message">Producten laden</p>;
   if (error) return <p className="error-message">{error}</p>;
 
@@ -242,7 +248,11 @@ const ProductsPage: React.FC = () => {
 
       <div className="products-grid">
         {filteredProducts.map((product) => (
-          <div key={product.id} className="product-card">
+          <div
+            key={product.id}
+            className="product-card"
+            onClick={() => handleProductClick(product.id)}
+          >
             <img
               src={product.photoUrl}
               alt={product.name}

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Product } from "../types/Product";
 
-const API_URL = "https://jemid-warmupapi.azurewebsites.net/api/products";
+const API_URL = "https://fakestoreapi.com/products";
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {

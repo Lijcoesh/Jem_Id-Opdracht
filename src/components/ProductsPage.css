@@ -95,6 +95,7 @@
   width: 300px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: #fff;
+  cursor: pointer; /* Add cursor pointer to indicate it's clickable */
 }
 
 .product-card:hover {
