@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Product, StandingPlace, WateringNeeds } from "../types/Product";
 import { fetchProducts } from "../services/productService";
 import "./ProductsPage.css";
+import Spinner from "./Spinner";
 
 const ProductsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -119,7 +120,7 @@ const ProductsPage: React.FC = () => {
       case StandingPlace.SUNNY:
         return "Zonnig";
       case StandingPlace.PARTIAL:
-        return "Gedeelelijken schaduw";
+        return "Gedeelelijke schaduw";
       case StandingPlace.SHADOW:
         return "Schaduw";
       default:
@@ -144,7 +145,7 @@ const ProductsPage: React.FC = () => {
     navigate(`/product/${productId}`);
   };
 
-  if (loading) return <p className="loading-message">Producten laden</p>;
+  if (loading) return <Spinner size="large" message="Producten laden" />;
   if (error) return <p className="error-message">{error}</p>;
 
   return (

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Product, StandingPlace, WateringNeeds } from "../types/Product";
 import "./ProductDetailPage.css";
+import Spinner from "./Spinner";
 
 const ProductDetailPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
@@ -34,7 +35,7 @@ const ProductDetailPage: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return <div className="loading-message">Loading product...</div>;
+    return <Spinner size="large" message="Loading product..." />;
   }
 
   if (!product) {

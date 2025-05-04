@@ -1,1 +1,3 @@
--Als url niet bestaat stuur naar ProductsPage of geef error
+-loading state visualization
+-Icon aanpassen
+-Titel aanpassen
