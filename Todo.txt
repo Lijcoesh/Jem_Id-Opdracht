@@ -1,2 +1,1 @@
--Terug knop vanaf productDetailPage
 -Als url niet bestaat stuur naar ProductsPage of geef error

@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import ProductsPage from "./components/ProductsPage";
 import ProductDetailPage from "./components/ProductDetailPage";
@@ -14,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ProductsPage />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
       </div>

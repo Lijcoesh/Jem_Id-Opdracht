@@ -43,11 +43,11 @@ const ProductDetailPage: React.FC = () => {
 
   return (
     <div className="product-detail-container">
+      <button className="back-button" onClick={() => navigate("/")}>
+        <span>↩</span>
+      </button>
       <div className="product-detail-header">
         <h1 className="product-detail-title">Product detail</h1>
-        <button className="back-button" onClick={() => navigate("/products")}>
-          Back to Products
-        </button>
       </div>
       <div className="product-detail-layout">
         <img
